@@ -36,7 +36,7 @@ public class Bolo extends Lanche {
 	 */
 	public static List<String> getTiposDeMassa() {
 		if (tiposDeMassa == null)
-			tiposDeMassa = lerTipos("mensagem.bolo.massa.tipo");
+			tiposDeMassa = Message.lerTipos("mensagem.bolo.massa.tipo");
 		return tiposDeMassa;
 	}
 	
@@ -45,7 +45,7 @@ public class Bolo extends Lanche {
 	 */
 	public static List<String> getTiposDeRecheio() {
 		if (tiposDeRecheio == null)
-			tiposDeRecheio = lerTipos("mensagem.bolo.recheio.tipo");
+			tiposDeRecheio = Message.lerTipos("mensagem.bolo.recheio.tipo");
 		return tiposDeRecheio;
 	}	
 
@@ -54,7 +54,7 @@ public class Bolo extends Lanche {
 	 */
 	public static List<String> getTiposDeCobertura() {
 		if (tiposDeCobertura == null)
-			tiposDeCobertura = lerTipos("mensagem.bolo.cobertura.tipo");
+			tiposDeCobertura = Message.lerTipos("mensagem.bolo.cobertura.tipo");
 		return tiposDeCobertura;
 	}		
 	
@@ -109,7 +109,7 @@ public class Bolo extends Lanche {
 
 	@Override
 	protected void calcularPreco() {
-		super.setPreco(40);
+		super.setPreco(PRECO_BOLO_BASICO);
 		
 	}
 
@@ -174,9 +174,12 @@ public class Bolo extends Lanche {
 			System.out.println(borda);
 			System.out.println("___________________________________________________");
 			System.out.println(message.getMessage("mensagem.bolo.resumo"));
-			System.out.println("- Massa: " + this.massa);
-			System.out.println("- Recheio: " + this.recheio);
-			System.out.println("- Cobertura: " + this.cobertura);
+			System.out.println("- " + message.getMessage("mensagem.bolo.massa") +
+					": " + this.massa);
+			System.out.println("- " + message.getMessage("mensagem.bolo.recheio") +
+					": " + this.recheio);
+			System.out.println("- " + message.getMessage("mensagem.bolo.cobertura") + 
+					": " + this.cobertura);
 			System.out.println("___________________________________________________");			
 			System.out.println(message.getMessage("mensagem.preco") + this.getPreco());
 			System.out.println(message.getMessage("mensagem.tempo.total") + this.getTempoTotal());
@@ -187,20 +190,4 @@ public class Bolo extends Lanche {
 		}
 	}
 	
-	private static List<String> lerTipos(String tipo) {
-		List<String> list = new ArrayList<>();
-		Message message = Message.getInstancia();
-		boolean temOpcao = true;
-		int i = 1;
-		while (temOpcao) {
-			try {
-				list.add(message.getMessage(tipo + i));
-				i++;
-			} catch (Exception e) {
-				temOpcao = false;
-			}		
-		}
-		return list;
-	}
-
 }

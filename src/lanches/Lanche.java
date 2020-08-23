@@ -60,10 +60,22 @@ public abstract class Lanche {
 		Lanche.tempoPreparo = tempoPreparo;
 	}
 	
+	/**
+	 * Imprime o resumo do pedido.
+	 */
 	protected abstract void imprimirResumo();
 
+	/**
+	 * Calcula o preço do lanche.
+	 */
 	protected abstract void calcularPreco();
 
+	/**
+	 * Compreende o tempo de preparo do lanche adicionado ao tempo de entrega de
+	 * acordo com a distância do endereço de entrega para o restaurante.
+	 * @param distancia Distância para o restaurante.
+	 * @return Tempo de chegada.
+	 */
 	protected abstract double calcularTempoChegada(double distancia);
 	
 }

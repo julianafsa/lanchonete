@@ -3,6 +3,9 @@
  */
 package lanches;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import util.Message;
 
 /**
@@ -11,6 +14,9 @@ import util.Message;
  */
 public class Sanduiche extends Lanche {
 	
+	/**
+	 * Quantidade máxima de ingredientes definido nos requisitos.
+	 */
 	private static final int quantidadeMaximaIngredientes = 10;
 	
 	/**
@@ -99,10 +105,22 @@ public class Sanduiche extends Lanche {
 			System.out.println(borda);
 			System.out.println("___________________________________________________");
 			System.out.println(message.getMessage("mensagem.sanduiche.resumo"));
+			Map<String, Integer> ingredienteQuantidade = new HashMap<>();
 			for (String ingrediente : ingredientes) {
-				if (ingrediente != null)
-					System.out.println("- " + ingrediente);
+				int quantidade = 1;
+				if (ingrediente != null) {
+					if (ingredienteQuantidade.containsKey(ingrediente)) {
+						quantidade = ingredienteQuantidade.get(ingrediente);
+						quantidade++;
+					} 
+					ingredienteQuantidade.put(ingrediente, quantidade);
+				}	
 			}
+			for (String ingrediente : ingredienteQuantidade.keySet()) {
+				System.out.println("- " + ingrediente + " (" + 
+					ingredienteQuantidade.get(ingrediente) + "x)");
+			}	
+
 			System.out.println("___________________________________________________");			
 			System.out.println(message.getMessage("mensagem.preco") + this.getPreco());
 			System.out.println(message.getMessage("mensagem.tempo.total") + this.tempoTotal);

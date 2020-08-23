@@ -25,11 +25,11 @@ public class Programa {
 	 */
 	private static final int SAIR = 0;
 	private static final int FINALIZAR_PEDIDO = 11;
-	
 	private static Scanner entrada;
 	
 	
 	/**
+	 * Programa de lanchonete delivery. 
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -63,7 +63,7 @@ public class Programa {
 			default: 
 				System.out.println(mensagem.getMessage("mensagem.opcao.invalida"));
 				break;
-		} // FIM DO SWITCH
+		} 
 	}
 	
 	/**
@@ -231,20 +231,20 @@ public class Programa {
 		do {
 			try {
 				opcao = entrada.nextInt();
-				switch (opcao) {
-					case 0: System.out.println(mensagem.getMessage("mensagem.desistir.pedido")); break;
-					case 1: massa = new Macarrao(); valida = true; break;
-					case 2: massa = new Pizza(); valida = true; break;
-					case 3: massa = new Lasanha(); valida = true; break;
-					default: 
-						System.out.println(mensagem.getMessage("mensagem.opcao.invalida")); 
-						valida = false;
-						break;
-				}		
+				if (opcao == 0)
+					System.out.println(mensagem.getMessage("mensagem.desistir.pedido"));
+				else if (opcao > 0 && opcao <= tiposDeMassa.size()){
+					String nomeDaClasse = mensagem.getMessage("mensagem.massa.tipo" +
+																opcao + ".nomedaclasse");
+					Class<?> classe = Class.forName(nomeDaClasse);
+					massa = (Massa) classe.getDeclaredConstructor().newInstance();
+					valida = true;
+				} else {
+					System.out.println(mensagem.getMessage("mensagem.opcao.invalida")); 
+				}	
 			} catch (Exception e) {
 				entrada = null;
 				entrada = new Scanner(System.in);
-				valida = false;
 				System.out.println(mensagem.getMessage("mensagem.opcao.invalida"));
 			}	
 		} while (!valida);	
@@ -401,8 +401,8 @@ public class Programa {
 
 		if (opcao != 0) {
 			double distancia = submenuDistancia();
-			bolo.calcularPreco();
 			bolo.calcularTempoChegada(distancia);
+			bolo.calcularPreco();
 			bolo.imprimirResumo();
 		}	
 	}
